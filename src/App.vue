@@ -42,7 +42,7 @@ export default {
         v-for="character of characters"
         v-bind:key="character.id"
       >
-        <div class="card">
+        <div class="card card-style">
           <div class="card-image justify-content-center">
             <figure class="image is-128x128">
               <img :src="character.image" class="" />
@@ -84,3 +84,4 @@ export default {
     </div> -->
   </div>
 </template>
+
