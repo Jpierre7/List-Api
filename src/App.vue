@@ -27,12 +27,22 @@ export default {
 </script>
 
 <template>
-  <div>
-    <h1 class="title">Consumir Api</h1>
+  <nav class="panel is-primary">
+    <h1 class="panel-heading panel-title">Rick and Morty API</h1>
+  </nav>
+
+  <div class="search-button">
+    <p class="control has-icons-left">
+      <input class="input is-primary" type="text" placeholder="Search" />
+      <span class="icon is-left">
+        <i class="fas fa-search" aria-hidden="true"></i>
+      </span>
+    </p>
+    <br />
     <button class="button is-success" v-on:click="fetch">Consultar</button>
     <button class="button is-danger" v-on:click="Clean">Limpiar</button>
   </div>
-
+  <br />
   <div class="container">
     <div
       class="columns is-desktop is-mobile is-tablet is-multiline is-centered"
@@ -84,4 +94,3 @@ export default {
     </div> -->
   </div>
 </template>
-
