@@ -4,13 +4,17 @@ export default {
   data: function () {
     return {
       characters: [],
+      filterCharacter: '',
     };
   },
 
   methods: {
     fetch() {
+      const params = {
+        name: this.filterCharacter,
+      };
       let result = axios
-        .get('https://rickandmortyapi.com/api/character')
+        .get('https://rickandmortyapi.com/api/character/', { params })
         .then((res) => {
           this.characters = res.data.results;
         })
@@ -21,6 +25,9 @@ export default {
     Clean() {
       let result = [];
       this.characters = result;
+    },
+    handleSearch() {
+      this.fetch();
     },
   },
 };
@@ -33,13 +40,22 @@ export default {
 
   <div class="search-button">
     <p class="control has-icons-left">
-      <input class="input is-primary" type="text" placeholder="Search" />
+      <input
+        v-model="filterCharacter"
+        class="input is-primary"
+        type="text"
+        placeholder="Search"
+        v-on:keyup.enter="handleSearch"
+        v-if="characters.length > 0"
+      />
       <span class="icon is-left">
         <i class="fas fa-search" aria-hidden="true"></i>
       </span>
     </p>
     <br />
-    <button class="button is-success" v-on:click="fetch">Consultar</button>
+    <button class="button is-success" v-on:click="handleSearch">
+      Consultar
+    </button>
     <button class="button is-danger" v-on:click="Clean">Limpiar</button>
   </div>
   <br />
