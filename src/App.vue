@@ -123,4 +123,13 @@ export default {
       Siguiente
     </button>
   </nav>
+
+  <footer class="footer">
+    <div class="content has-text-centered">
+      <p>
+        <strong>Project Api Vue Js</strong> by
+        <spam class="is-size-4 has-text-primary">JP👨‍💻</spam>.
+      </p>
+    </div>
+  </footer>
 </template>
