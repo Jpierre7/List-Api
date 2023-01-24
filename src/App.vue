@@ -5,18 +5,19 @@ export default {
     return {
       characters: [],
       filterCharacter: '',
+      page: 1,
+      info: {},
     };
   },
 
   methods: {
-    fetch() {
-      const params = {
-        name: this.filterCharacter,
-      };
+    fetch(url) {
       let result = axios
-        .get('https://rickandmortyapi.com/api/character/', { params })
+        .get(`${url}&name=${this.filterCharacter}`)
         .then((res) => {
           this.characters = res.data.results;
+          this.info = res.data.info;
+          this.page = url.split('page=')[1];
         })
         .catch((err) => {
           console.log(err);
@@ -25,9 +26,10 @@ export default {
     Clean() {
       let result = [];
       this.characters = result;
+      this.filterCharacter = '';
     },
     handleSearch() {
-      this.fetch();
+      this.fetch('https://rickandmortyapi.com/api/character/?page=1');
     },
   },
 };
@@ -46,7 +48,6 @@ export default {
         type="text"
         placeholder="Search"
         v-on:keyup.enter="handleSearch"
-        v-if="characters.length > 0"
       />
       <span class="icon is-left">
         <i class="fas fa-search" aria-hidden="true"></i>
@@ -56,7 +57,13 @@ export default {
     <button class="button is-success" v-on:click="handleSearch">
       Consultar
     </button>
-    <button class="button is-danger" v-on:click="Clean">Limpiar</button>
+    <button
+      v-if="characters.length > 0"
+      class="button is-danger"
+      v-on:click="Clean"
+    >
+      Limpiar
+    </button>
   </div>
   <br />
   <div class="container">
@@ -101,12 +108,19 @@ export default {
         </div>
       </div>
     </div>
-
-    <!-- <div class="card-image">
-      <img src="{{character.image}}" alt="" />
-    </div>
-    <div class="card-content">
-      <h1>{{ character.name }}</h1>
-    </div> -->
   </div>
+  <nav
+    class="is-flex is-justify-content-center my-2"
+    role="navegation"
+    aria-label="pagination"
+    v-if="characters.length > 0"
+  >
+    <button :disabled="!info.prev" class="button" v-on:click="fetch(info.prev)">
+      Anterior
+    </button>
+    <button class="button is-primary mx-2">{{ page }}</button>
+    <button :disabled="!info.next" class="button" v-on:click="fetch(info.next)">
+      Siguiente
+    </button>
+  </nav>
 </template>
