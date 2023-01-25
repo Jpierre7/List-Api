@@ -12,12 +12,13 @@ export default {
 
   methods: {
     fetch(url) {
+      const newUrl = url.split('&name=')[0];
       let result = axios
-        .get(`${url}&name=${this.filterCharacter}`)
+        .get(`${newUrl}&name=${this.filterCharacter}`)
         .then((res) => {
           this.characters = res.data.results;
           this.info = res.data.info;
-          this.page = url.split('page=')[1];
+          this.page = newUrl.split('page=')[1];
         })
         .catch((err) => {
           console.log(err);
